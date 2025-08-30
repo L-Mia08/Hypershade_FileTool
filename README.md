@@ -56,6 +56,7 @@ CodeをクリックしてDownload ZIPからダウンロードできます。
 Mayaのスプリクトエディターを起動して「Hypershade_FileTool_in.py」登録して実行するとGUIが表示されます。  
   
 日本語版の方は"C:\Users\{名前}\Documents\maya\2023\ja_JP\scripts"に入れると起動できるはずです。  
+動作確認はMaya2023とMaya2025です。  
 
   
 《使い方》  
