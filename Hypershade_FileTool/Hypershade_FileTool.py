@@ -209,12 +209,40 @@ def create_surface_shader_with_file(file_path=None):
     # Fileノードを作成
     file_node = cmds.shadingNode('file', asTexture=True, isColorManaged=True, name=file_node_name)
 
+    # UV（place2dTexture）ノードを作成
+    place2d = cmds.shadingNode('place2dTexture', asUtility=True, name=file_node_name + "_place2d")
+
+    # place2dTexture と file ノードを接続
+    cmds.connectAttr(place2d + '.coverage', file_node + '.coverage', f=True)
+    cmds.connectAttr(place2d + '.translateFrame', file_node + '.translateFrame', f=True)
+    cmds.connectAttr(place2d + '.rotateFrame', file_node + '.rotateFrame', f=True)
+    cmds.connectAttr(place2d + '.mirrorU', file_node + '.mirrorU', f=True)
+    cmds.connectAttr(place2d + '.mirrorV', file_node + '.mirrorV', f=True)
+    cmds.connectAttr(place2d + '.stagger', file_node + '.stagger', f=True)
+    cmds.connectAttr(place2d + '.wrapU', file_node + '.wrapU', f=True)
+    cmds.connectAttr(place2d + '.wrapV', file_node + '.wrapV', f=True)
+    cmds.connectAttr(place2d + '.repeatUV', file_node + '.repeatUV', f=True)
+    cmds.connectAttr(place2d + '.offset', file_node + '.offset', f=True)
+    cmds.connectAttr(place2d + '.rotateUV', file_node + '.rotateUV', f=True)
+    cmds.connectAttr(place2d + '.noiseUV', file_node + '.noiseUV', f=True)
+    cmds.connectAttr(place2d + '.vertexUvOne', file_node + '.vertexUvOne', f=True)
+    cmds.connectAttr(place2d + '.vertexUvTwo', file_node + '.vertexUvTwo', f=True)
+    cmds.connectAttr(place2d + '.vertexUvThree', file_node + '.vertexUvThree', f=True)
+    cmds.connectAttr(place2d + '.vertexCameraOne', file_node + '.vertexCameraOne', f=True)
+    cmds.connectAttr(place2d + '.outUV', file_node + '.uvCoord', f=True)
+    cmds.connectAttr(place2d + '.outUvFilterSize', file_node + '.uvFilterSize', f=True)
+
     # FileノードをsurfaceShaderに接続
     cmds.connectAttr(file_node + '.outColor', shader + '.outColor')
 
     # file_pathが指定されている場合は、ファイルノードにファイルを設定
     if file_path:
         cmds.setAttr(file_node + '.fileTextureName', file_path, type="string")
+
+    # ShadingEngine(SG)を作成してSurface Shaderを接続
+    sg_name = shader_name + "_SG"
+    shading_engine = cmds.sets(renderable=True, noSurfaceShader=True, empty=True, name=sg_name)
+    cmds.connectAttr(shader + ".outColor", shading_engine + ".surfaceShader", f=True)
 
     # 新しいシェーダーを返す
     return shader
@@ -301,7 +329,7 @@ def show_license(*args):
     # MIT Licenseの内容を表示
     license_text = (
         "MIT License\n\n"
-        "Copyright (c) 2024 mirumoru\n\n"
+        "Copyright (c) 2024 Naruse\n\n"
         "Permission is hereby granted, free of charge, to any person obtaining a copy\n"
         "of this software and associated documentation files (the \"Software\"), to deal\n"
         "in the Software without restriction, including without limitation the rights\n"
@@ -371,9 +399,9 @@ def create_hypershade_ui():
     cmds.columnLayout(adjustableColumn=True)
     cmds.rowColumnLayout(numberOfColumns=4, columnWidth=[(1, 30), (2, 50), (3, 30), (4, 50)])
     cmds.text(label="幅:")
-    cmds.intField('widthField', value=512) #デフォルト512
+    cmds.intField('widthField', value=2048) #デフォルト:2048
     cmds.text(label="高さ:")
-    cmds.intField('heightField', value=512) #デフォルト512
+    cmds.intField('heightField', value=2048) #デフォルト:2048
     cmds.setParent('..')
     cmds.setParent('..')
     cmds.setParent('..')
@@ -408,10 +436,10 @@ def create_hypershade_ui():
     cmds.frameLayout(label="About", collapsable=True, collapse=True, width=300)
     cmds.columnLayout(adjustableColumn=True)
     cmds.text(label="スクリプト名:Hypershade File Tool",align='left')
-    cmds.text(label="作成者:mirumoru, GPT-4o",align='left')
+    cmds.text(label="作成者:Naruse, GPT-4o",align='left')
     cmds.text(label="作成日:2024年9月5日",align='left')
-    cmds.text(label="更新日:2024年12月30日",align='left')
-    cmds.text(label="バージョン:v1.2",align='left')
+    cmds.text(label="更新日:2025年10月29日",align='left')
+    cmds.text(label="バージョン:v1.3",align='left')
     cmds.text(label="ライセンス:MIT License",align='left')
     cmds.separator(height=5, style='none')
     # クリック時にshow_license関数を呼び出す
