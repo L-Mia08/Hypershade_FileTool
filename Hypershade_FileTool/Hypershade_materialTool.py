@@ -538,7 +538,7 @@ def create_shader_selector_ui():
     cmds.frameLayout(label="About", collapsable=True, collapse=True, width=300)
     cmds.columnLayout(adjustableColumn=True)
     cmds.text(label="スクリプト名:Hypershade Material Tool",align='left')
-    cmds.text(label="作成者:mirumoru, GPT-4o",align='left')
+    cmds.text(label="作成者:L-Mia08, GPT-4o",align='left')
     cmds.text(label="作成日:2024年10月4日",align='left')
     cmds.text(label="更新日:2024年12月30日",align='left')
     cmds.text(label="バージョン:v0.5",align='left')
