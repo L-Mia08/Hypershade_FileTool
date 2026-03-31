@@ -329,7 +329,7 @@ def show_license(*args):
     # MIT Licenseの内容を表示
     license_text = (
         "MIT License\n\n"
-        "Copyright (c) 2024 Naruse\n\n"
+        "Copyright (c) 2024 L-Mia08\n\n"
         "Permission is hereby granted, free of charge, to any person obtaining a copy\n"
         "of this software and associated documentation files (the \"Software\"), to deal\n"
         "in the Software without restriction, including without limitation the rights\n"
